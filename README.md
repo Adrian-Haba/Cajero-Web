@@ -9,3 +9,4 @@
 
 
 ### Trello: https://trello.com/b/Z1qKVa1E/proyecto-entorno-cliente
+### Figma: https://www.figma.com/file/FmNnpavDY00xsBe5SwybsF/Banco-Hispalis?node-id=0%3A1
