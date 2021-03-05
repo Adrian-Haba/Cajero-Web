@@ -1,4 +1,5 @@
 # Cajero Web
+### PROYECTO EN FASE BETA
 Cajero Web, es el nombre de esta aplicación web. Consiste en una emulación de un cajero automático virtual. Dicho en la descripción del repositorio de este proyecto, Cajero Web es el remake del pasado proyecto llamado Cajero Automático realizado en Java y MySQL.
  
 Este proyecto está realizado con las siguientes librerías/framework:
