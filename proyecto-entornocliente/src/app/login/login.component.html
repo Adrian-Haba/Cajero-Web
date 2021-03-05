@@ -1,0 +1,16 @@
+<div class="info-login text-center">
+  <p class="title h1">BANCO HISPALIS</p>
+  <form (submit)="login()">
+    <input type="email" [(ngModel)]="user.email" name = "email" class="input" placeholder="Email" />
+    <br />
+    <input type="password" [(ngModel)]="user.password" name = "password" class="input" placeholder="Contraseña" />
+    <br />
+    <div>
+      <p>
+        ¿Aún no te has registrado?
+        <span class="font-weight-bold accion" [routerLink]="['/register']"> Regístrate</span>
+      </p>
+    </div>
+    <button class="btn btn-me">Entrar</button>
+  </form>
+</div>
