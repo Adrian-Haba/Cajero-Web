@@ -25,7 +25,7 @@ A continuación se detallarán las siguientes funcionalidades: (PROVISIONAL)
 - 4- Envío por correo electrónico al usuario del movimiento realizado: Acción (ingreso , retirada o transferencia (en el último caso, especificar a que cuenta realizó el usuario la transferencia), cantidad, fecha (DD/MM/YYY/h/m/s))
 - 5- Mostrar dinero Cartera virtual/cuenta corriente
 - 6- Ultimos movimientos: Acción (ingreso , retirada o transferencia (en el último caso, especificar a que cuenta realizó el usuario la transferencia), cantidad, fecha (DD/MM/YYYY/h/m/s))
-- 
+ 
 # Links:
 ### Trello: https://trello.com/b/Z1qKVa1E/proyecto-entorno-cliente
 ### Figma: https://www.figma.com/file/FmNnpavDY00xsBe5SwybsF/Banco-Hispalis?node-id=0%3A1
