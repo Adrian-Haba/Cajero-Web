@@ -1,27 +1,27 @@
-# ProyectoEntornocliente
+# Cajero Web
+### PROYECTO EN FASE BETA
+Cajero Web, es el nombre de esta aplicación web. Consiste en una emulación de un cajero automático virtual. Dicho en la descripción del repositorio de este proyecto, Cajero Web es el remake del pasado proyecto llamado Cajero Automático realizado en Java y MySQL.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.1.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Este proyecto está realizado con las siguientes librerías/framework:
+- Angular
+- Typescript
+- Javascript
+- MongoDB
+- Express
+El proyecto sigue con la siguiente arquitectura:
+![Arquitectura](https://user-images.githubusercontent.com/56442732/110158196-5ca37400-7de9-11eb-906f-391e2a838c29.png)
+También contiene una guia de como se desarrollará el proyecto:
+![Esquema del proyecto](https://user-images.githubusercontent.com/56442732/110158344-88265e80-7de9-11eb-88eb-657c3320e9a7.png)
+A su vez, contiene un esquema sobre cómo será la base de datos en MongoDB:
+![Base de datos - Cajero Web](https://user-images.githubusercontent.com/56442732/110158537-c91e7300-7de9-11eb-90ed-3c1432fadae8.png)
+A continuación se detallarán las siguientes funcionalidades: (PROVISIONAL)
+- 1- Registro/ inicio de sesión
+- 2- Creación/eliminación de cuentas bancarias (Alertar al usuario de en caso de eliminar la cuenta retirar el dinero)
+- 3- Acción de Ingresar/retirar/transferir dinero
+- 4- Envío por correo electrónico al usuario del movimiento realizado: Acción (ingreso , retirada o transferencia (en el último caso, especificar a que cuenta realizó el usuario la transferencia), cantidad, fecha (DD/MM/YYY/h/m/s))
+- 5- Mostrar dinero Cartera virtual/cuenta corriente
+- 6- Ultimos movimientos: Acción (ingreso , retirada o transferencia (en el último caso, especificar a que cuenta realizó el usuario la transferencia), cantidad, fecha (DD/MM/YYYY/h/m/s))
+# Links:
+### Trello: https://trello.com/b/Z1qKVa1E/proyecto-entorno-cliente
+### Figma: https://www.figma.com/file/FmNnpavDY00xsBe5SwybsF/Banco-Hispalis?node-id=0%3A1
+### Heroku: https://cajero-web.herokuapp.com/
