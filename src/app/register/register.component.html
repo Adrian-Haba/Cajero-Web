@@ -1,0 +1,16 @@
+<div class="info-register text-center">
+  <p class="title h1">BANCO HISPALIS</p>
+  <form (submit)="register()">
+    <input type="email" [(ngModel)]="user.email" name = "email" class="input" placeholder="Email" required />
+    <br />
+    <input type="password" [(ngModel)]="user.password" name = "password" class="input" placeholder="Contraseña" required />
+    <br />
+    <div>
+      <p>
+        ¿Ya te has registrado?
+        <span class="font-weight-bold accion" [routerLink]="['/login']"> Inicia sesión</span>
+      </p>
+    </div>
+    <button class="btn btn-me">Registrarse</button>
+  </form>
+</div>
