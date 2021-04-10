@@ -6,8 +6,9 @@ Este proyecto está realizado con las siguientes librerías/framework:
 - Angular
 - Typescript
 - Javascript
-- MongoDB
 - Express
+
+Como base de datos usaremos MongoDB
 
 El proyecto sigue con la siguiente arquitectura:
 ![Arquitectura](https://user-images.githubusercontent.com/56442732/110158196-5ca37400-7de9-11eb-906f-391e2a838c29.png)
@@ -29,4 +30,4 @@ A continuación se detallarán las siguientes funcionalidades: (PROVISIONAL)
 # Links:
 ### Trello: https://trello.com/b/Z1qKVa1E/proyecto-entorno-cliente
 ### Figma: https://www.figma.com/file/FmNnpavDY00xsBe5SwybsF/Banco-Hispalis?node-id=0%3A1
-### Heroku: https://cajero-web.herokuapp.com/ "CAIDO"
+### Netlify: https://cajeroweb.netlify.app/
