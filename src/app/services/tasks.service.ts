@@ -10,14 +10,18 @@ export class TasksService {
 
   constructor(private http: HttpClient) { }
 
-
-  getTask(){
-    return this.http.get(this.URL + '/tasks');
+  //EJEMPLO de obtención de datos públicos
+  getTasks(){
+    return this.http.get<any>(this.URL + '/tasks');
+   }
+   //EJEMPLO de obtención de datos privados
+  getPrivateTasks(){
+    return this.http.get<any>(this.URL + '/private-tasks');
    }
 
-  getPrivateTask(){
-    return this.http.get(this.URL + '/private-tasks');
+  //Obtención del nombre de usuario logueado
+   getUsername(){
+    return this.http.get<any>(this.URL + '/username');
    }
-
 
 }
