@@ -1,0 +1,23 @@
+.font{
+    color:white;
+    font-family: 'teko';
+    font-size: 20px;
+}
+
+.cardsize{
+    font-size: 20px;
+}
+.card-mgl{
+    margin-right: 900px;
+    margin-left: 200px;
+    margin-top: 100px;
+}
+.card-mgr{
+    margin-right: 200px;
+    margin-left: 900px;
+    margin-top: -325px;
+    margin-bottom: 482px;
+} 
+.selectmg{
+    margin-left: 560px;
+}

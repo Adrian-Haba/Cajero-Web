@@ -3,6 +3,7 @@ body {
   background-image: url("/assets/img/greendiamond.jpg");
   background-color: #27ae6075;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
   font-family: 'teko';
 }
