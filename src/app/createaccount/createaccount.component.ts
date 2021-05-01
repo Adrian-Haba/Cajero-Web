@@ -1,5 +1,7 @@
 import { Component, OnInit} from '@angular/core';
+import { AuthService } from '../services/auth.service';
 import { TasksService } from '../services/tasks.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-createaccount',
@@ -10,7 +12,15 @@ export class CreateaccountComponent implements OnInit {
 
   username: any = '';
 
-  constructor (private tasksService: TasksService) {}
+  account = {
+    name_account: '',
+    balance: 0
+  }
+
+  constructor (
+    private authService: AuthService, 
+    private tasksService: TasksService,
+    private router: Router) {}
 
   ngOnInit() {
     this.tasksService.getUsername()
@@ -22,6 +32,17 @@ export class CreateaccountComponent implements OnInit {
         err => console.log(err)
       )
   }
-  create() {}
-
+  create() {
+    this.authService.create(this.account)
+      .subscribe(
+        res => {
+          console.log(res)
+        },
+        err => {
+          return console.log(err)
+        }
+      )
+      alert(`Cuenta creada correctamente. Volviendo a "CUENTAS"`);
+      this.router.navigate(['/accounts']);
+  }
 }

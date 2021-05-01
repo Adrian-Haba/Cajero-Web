@@ -2,6 +2,7 @@ const { Router } = require('express');
 const router = Router();
 
 const User = require('../models/User');
+const Account = require('../models/Account');
 
 const jwt = require('jsonwebtoken');
 
@@ -27,9 +28,13 @@ router.post('/login', async (req, res) => {
 
   const token = jwt.sign({_id: user._id, name: user.name}, 'credenciales');
   return res.status(200).json({token});
-  
+});
 
-  
+router.post('/createaccount', async (req, res) => {
+  //Guardamos la cuenta del usuario en la base de datos
+    const { name_account, balance } = req.body; 
+    const newAccount = new Account({name_account, balance});
+    await newAccount.save();
 });
 
 //EJEMPLO Ruta pública para poder devolver datos

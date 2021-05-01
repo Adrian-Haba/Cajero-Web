@@ -1,12 +1,12 @@
 <div class="cards text-center">
     <p class="font fixed-top text-left">Bienvenido, <b>{{ username }}</b></p>
     <p class="font fixed-top text-right">BANCO HISPALIS</p>
-    <form>
-        <input type="text" class="input" placeholder="Introduzca nombre de cuenta" />
+    <form (submit)="create()">
+        <input type="name_account" [(ngModel)]="account.name_account" name = "name_account" class="input" placeholder="Introduzca nombre de cuenta" />
         <br />
         <div class="btn card-mgl card bg-light">
             <div class="card-body text-center">
-                <p class="card-text cardsize">Aceptar</p>
+                <button class="card-text cardsize">Aceptar</button>
             </div>
         </div>
         <div class="btn card-mgr card bg-light">
