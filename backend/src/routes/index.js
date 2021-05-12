@@ -2,6 +2,7 @@ const { Router } = require('express');
 const router = Router();
 
 const User = require('../models/User');
+const Account = require('../models/Account');
 
 const jwt = require('jsonwebtoken');
 
@@ -10,7 +11,7 @@ router.get('/', (req, res) => res.send("Hello World"));
 router.post('/register', async (req, res) => {
   //Guardamos al usuario dentro de la base de datos
     const { email, name, password } = req.body; 
-    const newUser = new User({email, name, password});
+    const newUser = new User({email, name, password });
     await newUser.save();
   // Una vez guardado creamos un token
     const token = jwt.sign({_id: newUser._id, name: newUser.name }, 'credenciales')
@@ -27,9 +28,26 @@ router.post('/login', async (req, res) => {
 
   const token = jwt.sign({_id: user._id, name: user.name}, 'credenciales');
   return res.status(200).json({token});
-  
+});
 
-  
+router.post('/createaccount',verifyToken, async (req, res) => {
+  //Guardamos la cuenta del usuario en la base de datos
+  //const query = {email: 'adrian@adaits.com'};
+  //const update = { $set: { name_account: "Deli Llama", balance: 0 }};
+  //const options = { upsert: true };
+  //await User.updateOne(query, update, options);
+
+    //let body = req.body;
+    //User.updateOne({_id:body._id },{
+    //  $set: {
+    //    account: name_account,
+    //    account: balance 
+    //  }
+    //})
+
+    const { name_account, balance } = req.body; 
+    const newAccount = new Account({name_account, balance});
+    await newAccount.save();
 });
 
 //EJEMPLO Ruta pública para poder devolver datos
@@ -85,6 +103,10 @@ router.get('/username', verifyToken, (req, res) => {
   var usernameLC = req.userName.toLowerCase()
   res.json(usernameLC);
 });
+//Ruta privada para pedir la cuenta del usuario logueado
+//router.get('/account', verifyToken, (req, res) => {
+//  res.json(req.AccountName);
+//}); 
 
 //Validación
  function verifyToken(req, res, next) {
@@ -105,6 +127,7 @@ router.get('/username', verifyToken, (req, res) => {
       return res.status(401).send('Acceso denegado');
     } 
     req.userName = payload.name;
+    //req.AccountName = payload.name_account;
     next();
     
   } catch(e) {

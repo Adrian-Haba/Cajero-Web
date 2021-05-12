@@ -12,7 +12,7 @@ export class RegisterComponent {
   user = {
     email: '',
     name: '',
-    password: ''
+    password: ''  
   }
 
   constructor (private authService: AuthService, private router: Router) { }

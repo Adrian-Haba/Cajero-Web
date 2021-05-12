@@ -1,0 +1,19 @@
+.font{
+    color:white;
+    font-family: 'teko';
+    font-size: 20px;
+}
+
+.card-mgc{
+  margin-right: 100px;
+  margin-left: 100px;
+  margin-top: 50px;
+}
+.cards{
+    padding: 40px;
+    margin-left: 350px;
+    margin-right: 350px;
+    margin-top: 150px;
+    color: white;
+    font-size: 25px;
+  }

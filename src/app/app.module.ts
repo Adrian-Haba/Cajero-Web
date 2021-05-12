@@ -5,24 +5,16 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 
-import { RouterModule, Routes} from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountsComponent } from './accounts/accounts.component';
-
-const router: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'register',
-    component: RegisterComponent
-  }
-];
+import { CreateaccountComponent } from './createaccount/createaccount.component';
+import { DeleteaccountComponent } from './deleteaccount/deleteaccount.component';
+import { ConfirmDeleteaccountComponent } from './confirm-deleteaccount/confirm-deleteaccount.component';
+import { DefinitiveDeleteaccountComponent } from './definitive-deleteaccount/definitive-deleteaccount.component';
 
 @NgModule({
   declarations: [
@@ -30,14 +22,17 @@ const router: Routes = [
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    AccountsComponent
+    AccountsComponent,
+    CreateaccountComponent,
+    DeleteaccountComponent,
+    ConfirmDeleteaccountComponent,
+    DefinitiveDeleteaccountComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
-    RouterModule.forRoot(router)
+    HttpClientModule
   ],
   providers: [
     AuthGuard,
