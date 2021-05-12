@@ -23,5 +23,8 @@ export class TasksService {
    getUsername(){
     return this.http.get<any>(this.URL + '/username');
    }
-
+   //Obtención de la cuenta del usuario logueado
+   getAccount(){
+    return this.http.get<any>(this.URL + '/account');   
+  }
 }

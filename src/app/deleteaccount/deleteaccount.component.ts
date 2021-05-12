@@ -1,5 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { TasksService } from '../services/tasks.service';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-deleteaccount',
@@ -10,7 +12,15 @@ export class DeleteaccountComponent implements OnInit {
 
   username: any = '';
 
-  constructor (private tasksService: TasksService) {}
+  account = {
+    name_account: '',
+    balance: 100
+  }
+
+  constructor (
+    private authService: AuthService, 
+    private tasksService: TasksService,
+    private router: Router) {}
 
   ngOnInit() {
     this.tasksService.getUsername()
@@ -22,6 +32,18 @@ export class DeleteaccountComponent implements OnInit {
         err => console.log(err)
       )
   }
-  delete() {}
+
+  //delete() {
+  //  this.authService.delete(this.account)
+  //    .subscribe(
+  //      res => {
+  //        console.log(res)
+  //      },
+  //      err => {
+  //        return console.log(err)
+  //      }
+  //    )
+  //    this.router.navigate(['/accounts']);
+ // }
 
 }

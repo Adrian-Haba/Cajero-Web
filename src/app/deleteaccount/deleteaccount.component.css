@@ -11,6 +11,12 @@
     margin: 10px;
   
   }
+
+  button{
+    border: none;
+    background-color: transparent;
+    }
+    
   .card-mgl{
     margin-right: 300px;
     margin-left: 100px;

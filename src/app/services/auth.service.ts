@@ -20,8 +20,7 @@ export class AuthService {
   }
   create(account: { name_account: string; balance: number; }) {
     return this.http.post<any>(this.URL + '/createaccount', account);
-}
-
+  }
   loggedIn() {
     return !!localStorage.getItem('token');
   }

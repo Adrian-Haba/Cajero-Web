@@ -33,6 +33,9 @@ export class CreateaccountComponent implements OnInit {
       )
   }
   create() {
+    if(this.account.name_account == ''){
+      alert("Inserte un nombre de cuenta")
+    }else{
     this.authService.create(this.account)
       .subscribe(
         res => {
@@ -44,5 +47,6 @@ export class CreateaccountComponent implements OnInit {
       )
       alert(`Cuenta creada correctamente. Volviendo a "CUENTAS"`);
       this.router.navigate(['/accounts']);
+    }
   }
 }

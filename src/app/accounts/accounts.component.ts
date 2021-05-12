@@ -11,6 +11,7 @@ import { TasksService } from '../services/tasks.service';
 export class AccountsComponent implements OnInit{
 
   username: any = '';
+  account: any = '';
 
   constructor (private authService: AuthService, private tasksService: TasksService) {}
 
@@ -23,6 +24,15 @@ export class AccountsComponent implements OnInit{
         },
         err => console.log(err)
       )
+      
+    //this.tasksService.getAccount()
+    //  .subscribe(
+    //    res => {
+    //      console.log(res);
+    //      this.account = res;
+    //    },
+    //    err => console.log(err)
+    //  )
   }
 
   logout(){
