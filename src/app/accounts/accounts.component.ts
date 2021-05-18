@@ -25,14 +25,14 @@ export class AccountsComponent implements OnInit{
         err => console.log(err)
       )
       
-    //this.tasksService.getAccount()
-    //  .subscribe(
-    //    res => {
-    //      console.log(res);
-    //      this.account = res;
-    //    },
-    //    err => console.log(err)
-    //  )
+    this.tasksService.getAccount()
+      .subscribe(
+        res => {
+          console.log(res);
+          this.account = res;
+        },
+        err => console.log(err)
+      )
   }
 
   logout(){

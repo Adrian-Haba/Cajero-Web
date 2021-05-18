@@ -30,24 +30,11 @@ router.post('/login', async (req, res) => {
   return res.status(200).json({token});
 });
 
-router.post('/createaccount',verifyToken, async (req, res) => {
-  //Guardamos la cuenta del usuario en la base de datos
-  //const query = {email: 'adrian@adaits.com'};
-  //const update = { $set: { name_account: "Deli Llama", balance: 0 }};
-  //const options = { upsert: true };
-  //await User.updateOne(query, update, options);
-
-    //let body = req.body;
-    //User.updateOne({_id:body._id },{
-    //  $set: {
-    //    account: name_account,
-    //    account: balance 
-    //  }
-    //})
-
-    const { name_account, balance } = req.body; 
-    const newAccount = new Account({name_account, balance});
-    await newAccount.save();
+router.post('/createaccount', async (req, res) => {
+  //Guardamos la cuenta en la base de datos
+  const { name_account, balance } = req.body; 
+  const newAccount = new Account({name_account, balance});
+  await newAccount.save();
 });
 
 //EJEMPLO Ruta pública para poder devolver datos
@@ -104,9 +91,15 @@ router.get('/username', verifyToken, (req, res) => {
   res.json(usernameLC);
 });
 //Ruta privada para pedir la cuenta del usuario logueado
-//router.get('/account', verifyToken, (req, res) => {
-//  res.json(req.AccountName);
-//}); 
+router.get('/account', (req, res) => {
+  const account1 =  { name_account } = req.body; 
+
+  const account = {
+    name_account: req.body.name_account
+  }; 
+
+  res.json(account1);
+}); 
 
 //Validación
  function verifyToken(req, res, next) {
