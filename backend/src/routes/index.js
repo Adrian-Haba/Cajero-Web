@@ -1,4 +1,4 @@
-const { Router } = require('express');
+const { Router, response } = require('express');
 const router = Router();
 
 const User = require('../models/User');
@@ -30,11 +30,37 @@ router.post('/login', async (req, res) => {
   return res.status(200).json({token});
 });
 
-router.post('/createaccount', async (req, res) => {
+router.post('/createaccount', verifyToken, async (req, res) => {
   //Guardamos la cuenta en la base de datos
-  const { name_account, balance } = req.body; 
-  const newAccount = new Account({name_account, balance});
-  await newAccount.save();
+  const { name_account, balance, userId = req.userId } = req.body;
+  const user = await User.findById(userId); 
+  const newAccount = new Account({
+    name_account, 
+    balance,
+    user: user._id
+  })
+
+  try {
+    const savedAccount = await newAccount.save()
+    user.account = user.account.concat(savedAccount._id)
+    await user.save()
+
+    res.json(savedAccount)
+  }catch (error) {
+    next(error)
+  }
+});
+
+//Recuperar todos los usuarios
+router.get('/users', async (req, res) => {
+  const users = await User.find({})
+  res.json(users)
+});
+
+//Recuperar todas las cuentas bancarias
+router.get('/accounts', async (req, res) => {
+  const accounts = await Account.find({})
+  res.json(accounts)
 });
 
 //EJEMPLO Ruta pública para poder devolver datos
@@ -90,17 +116,6 @@ router.get('/username', verifyToken, (req, res) => {
   var usernameLC = req.userName.toLowerCase()
   res.json(usernameLC);
 });
-//Ruta privada para pedir la cuenta del usuario logueado
-router.get('/account', (req, res) => {
-  const account1 =  { name_account } = req.body; 
-
-  const account = {
-    name_account: req.body.name_account
-  }; 
-
-  res.json(account1);
-}); 
-
 //Validación
  function verifyToken(req, res, next) {
   try {
@@ -119,8 +134,8 @@ router.get('/account', (req, res) => {
     if (!payload) {
       return res.status(401).send('Acceso denegado');
     } 
+    req.userId = payload._id;
     req.userName = payload.name;
-    //req.AccountName = payload.name_account;
     next();
     
   } catch(e) {

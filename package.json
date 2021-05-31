@@ -39,7 +39,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "mongoose": "^5.11.18",
+    "mongoose": "^5.12.12",
     "path": "^0.12.7",
     "protractor": "~7.0.0",
     "rxjs": "~6.6.0",
