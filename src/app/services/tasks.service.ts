@@ -27,4 +27,7 @@ export class TasksService {
    getAccount(){
     return this.http.get<any>(this.URL + '/account');   
   }
+  showbalance() {
+    return this.http.get<any>(this.URL + '/showbalance');
+  }
 }

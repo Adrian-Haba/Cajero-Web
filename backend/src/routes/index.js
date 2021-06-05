@@ -81,6 +81,17 @@ router.get('/account', async (req, res) => {
   res.json(account)
 })
 
+//Ruta privada para pedir el saldo de la cuenta para confirmar si se puede eliminar o no
+router.get('/showbalance', async (req, res) => {
+  const infouser = await User.findOne({}).populate('account', {
+    _id: 0,
+    balance: 1
+  })
+  balance = infouser.account[0]
+  accountBalance = balance.balance
+  res.json(accountBalance)
+})
+
 //Validación
  function verifyToken(req, res, next) {
   try {
