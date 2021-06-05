@@ -63,59 +63,24 @@ router.get('/accounts', async (req, res) => {
   res.json(accounts)
 });
 
-//EJEMPLO Ruta pública para poder devolver datos
-router.get('/tasks', (req, res) =>{
-  res.json([
-    {
-      _id: '1',
-      name: "lorem ipsum",
-      description: 'lorem ipsum',
-      date: "2021-03-04T11:02:43.765Z"
-    },
-    {
-      _id: '2',
-      name: "lorem ipsum",
-      description: 'lorem ipsum',
-      date: "2024-03-04T11:02:43.765Z"
-    },
-    {
-      _id: '3',
-      name: "lorem ipsum",
-      description: 'lorem ipsum',
-      date: "2021-03-04T17:02:43.765Z"
-    }
-  ])
-});
-
-//EJEMPLO Ruta privada para devolver datos privados
-router.get('/private-tasks', verifyToken, (req, res) =>{
-  res.json([
-    {
-      _id: '1',
-      name: "lorem ipsum",
-      description: 'lorem ipsum',
-      date: "2021-03-04T11:02:43.765Z"
-    },
-    {
-      _id: '2',
-      name: "lorem ipsum",
-      description: 'lorem ipsum',
-      date: "2024-03-04T11:02:43.765Z"
-    },
-    {
-      _id: '3',
-      name: "lorem ipsum",
-      description: 'lorem ipsum',
-      date: "2021-03-04T17:02:43.765Z"
-    }
-  ])
-});
-
 //Ruta privada para pedir el nombre del usuario logueado
 router.get('/username', verifyToken, (req, res) => {
   var usernameLC = req.userName.toLowerCase()
   res.json(usernameLC);
 });
+
+//Ruta privada para pedir la cuenta de banco del usuario
+router.get('/account', async (req, res) => {
+  const infouser = await User.findOne({}).populate('account', {
+    _id: 0,
+    name_account: 1
+  })
+  name_account = infouser.account[0]
+  account = name_account.name_account
+
+  res.json(account)
+})
+
 //Validación
  function verifyToken(req, res, next) {
   try {
@@ -136,6 +101,7 @@ router.get('/username', verifyToken, (req, res) => {
     } 
     req.userId = payload._id;
     req.userName = payload.name;
+    req.accountId = payload.account;
     next();
     
   } catch(e) {

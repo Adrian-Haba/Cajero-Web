@@ -4,7 +4,11 @@ const userSchema = new Schema ({
   email: String,
   name: String,
   password: String,
-  account: Array
+  //account: Array
+  account:[{
+    type: Schema.Types.ObjectId,
+    ref: 'Account'
+  }]
 },{  
   timestamps: true
 });
