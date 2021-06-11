@@ -8,7 +8,13 @@ import { CreateaccountComponent } from './createaccount/createaccount.component'
 import { DeleteaccountComponent } from './deleteaccount/deleteaccount.component';
 import { ConfirmDeleteaccountComponent } from './confirm-deleteaccount/confirm-deleteaccount.component';
 import { DefinitiveDeleteaccountComponent } from './definitive-deleteaccount/definitive-deleteaccount.component';
+import { InfoaccountComponent } from './infoaccount/infoaccount.component';
+import { AddbalanceComponent } from './addbalance/addbalance.component';
+import { RemovebalanceComponent } from './removebalance/removebalance.component';
 import { AuthGuard } from './auth.guard';
+
+/* Aquí se definen las rutas de los diferentes apartados de la aplicación web para poder 
+ir de una ventana a otra */
 
 const routes: Routes = [
   {
@@ -46,6 +52,21 @@ const routes: Routes = [
   {
     path:'definitive-deleteaccount',
     component:DefinitiveDeleteaccountComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'infoaccount',
+    component:InfoaccountComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'addbalance',
+    component:AddbalanceComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'removebalance',
+    component:RemovebalanceComponent,
     canActivate: [AuthGuard]
   }
 ];

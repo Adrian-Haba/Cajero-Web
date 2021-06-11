@@ -1,10 +1,10 @@
-const { Router, response } = require('express');
+const { Router} = require('express');
 const router = Router();
 
 const User = require('../models/User');
 const Account = require('../models/Account');
 
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken'); 
 
 router.get('/', (req, res) => res.send("Hello World"));
 
@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
   return res.status(200).json({token});
 });
 
-router.post('/createaccount', verifyToken, async (req, res) => {
+router.post('/createaccount',verifyToken, async (req, res) => {
   //Guardamos la cuenta en la base de datos
   const { name_account, balance, userId = req.userId } = req.body;
   const user = await User.findById(userId); 
@@ -63,13 +63,13 @@ router.get('/accounts', async (req, res) => {
   res.json(accounts)
 });
 
-//Ruta privada para pedir el nombre del usuario logueado
+//Ruta para pedir el nombre del usuario logueado
 router.get('/username', verifyToken, (req, res) => {
   var usernameLC = req.userName.toLowerCase()
   res.json(usernameLC);
 });
 
-//Ruta privada para pedir la cuenta de banco del usuario
+//Ruta para pedir la cuenta de banco del usuario
 router.get('/account', async (req, res) => {
   const infouser = await User.findOne({}).populate('account', {
     _id: 0,
@@ -81,7 +81,7 @@ router.get('/account', async (req, res) => {
   res.json(account)
 })
 
-//Ruta privada para pedir el saldo de la cuenta para confirmar si se puede eliminar o no
+//Ruta para pedir el saldo de la cuenta para confirmar si se puede eliminar o no
 router.get('/showbalance', async (req, res) => {
   const infouser = await User.findOne({}).populate('account', {
     _id: 0,
@@ -91,6 +91,123 @@ router.get('/showbalance', async (req, res) => {
   accountBalance = balance.balance
   res.json(accountBalance)
 })
+
+//Ruta para pedir la id de la cuenta para proceder a eliminarla
+router.get('/showid', async (req, res) => {
+  const infouser = await User.findOne({}).populate('account', {
+    _id: 1
+  })
+  id_account = infouser.account[0]
+  idAccount = id_account.id_account
+  res.json(idAccount)
+})
+
+//Ruta para eliminar la cuenta del usuario logueado
+router.delete('/deleteaccount', async (req, res) => {
+  
+  //PEDIR ID CUENTA
+  const infouser2 = await User.findOne({}).populate('account', {
+    _id: 1
+  })
+  id = infouser2.account
+
+  Account.findByIdAndRemove(id, (err) => {
+    if (err) res.status(500).send({ message: `Error al eliminar cuenta bancaria: ${err}`})
+    res.status(200).send({ message: `Cuenta eliminada correctamente`})
+  })
+});
+
+//Ruta para incrementar el saldo de la cuenta
+router.put('/sumbalance', async function(req, res) {
+
+    //PEDIR SALDO TOTAL
+    const infouser = await User.findOne({}).populate('account', {
+      _id: 0,
+      balance: 1
+    })
+    all_balance = infouser.account[0]
+    accountBalance = all_balance.balance 
+    
+    //PEDIR ID CUENTA
+    const infouser2 = await User.findOne({}).populate('account', {
+      _id: 1
+    })
+    id = infouser2.account
+    
+    //Recoger datos 
+    let { balance } = req.body;
+
+    //Incrementar saldo
+    balance = accountBalance + balance
+    
+    //Actualizar
+    Account.updateOne({ _id: id }, {
+      $set: {
+        balance: balance
+      }
+    },
+    function(error) {
+      if (error) {
+          res.json({
+            resultado: false,
+            msg: 'Error al actualiar saldo',
+            err
+          });
+      } else {
+        res.json({
+          resultado: true,
+          msg: 'Saldo actualizado correctamente'
+        })
+      }
+    }
+  )
+});
+
+//Ruta para retirar el saldo de la cuenta
+router.put('/resbalance', async function(req, res) {
+
+  //PEDIR SALDO TOTAL
+  const infouser = await User.findOne({}).populate('account', {
+    _id: 0,
+    balance: 1
+  })
+  all_balance = infouser.account[0]
+  accountBalance = all_balance.balance 
+  
+  //PEDIR ID CUENTA
+  const infouser2 = await User.findOne({}).populate('account', {
+    _id: 1
+  })
+  id = infouser2.account
+  
+  //Recoger datos 
+  let { balance } = req.body;
+
+  //Retirar saldo
+  balance = accountBalance - balance
+  
+  //Actualizar
+  Account.updateOne({ _id: id }, {
+    $set: {
+      balance: balance
+    }
+  },
+  function(error) {
+    if (error) {
+        res.json({
+          resultado: false,
+          msg: 'Error al actualiar saldo',
+          err
+        });
+    } else {
+      res.json({
+        resultado: true,
+        msg: 'Saldo actualizado correctamente'
+      })
+    }
+  }
+)
+});
 
 //Validación
  function verifyToken(req, res, next) {

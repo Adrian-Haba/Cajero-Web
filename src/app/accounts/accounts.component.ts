@@ -40,7 +40,6 @@ export class AccountsComponent implements OnInit{
       this.tasksService.showbalance()
       .subscribe(
         res => {
-          console.log(res);
           this.balance = res;
         },
         err => console.log(err)
@@ -58,6 +57,16 @@ export class AccountsComponent implements OnInit{
       } else {
         this.router.navigate(['/confirm-deleteaccount']);
       }
+    }
+  }
+
+  enteraccount(){
+    let seleccionar = document.querySelector('select');
+    let eleccion = seleccionar!.value;
+    if (eleccion === '0') {
+      alert("Selecciona tu cuenta para poder realizar operaciones")
+    } else {
+      this.router.navigate(['/infoaccount']);
     }
   }
   

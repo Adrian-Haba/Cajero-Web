@@ -5,20 +5,10 @@ import { HttpClient } from "@angular/common/http";
   providedIn: 'root'
 })
 export class TasksService {
-
+  
   private URL = 'http://localhost:3000/api'
 
   constructor(private http: HttpClient) { }
-
-  //EJEMPLO de obtención de datos públicos
-  getTasks(){
-    return this.http.get<any>(this.URL + '/tasks');
-   }
-   //EJEMPLO de obtención de datos privados
-  getPrivateTasks(){
-    return this.http.get<any>(this.URL + '/private-tasks');
-   }
-
   //Obtención del nombre de usuario logueado
    getUsername(){
     return this.http.get<any>(this.URL + '/username');
@@ -27,7 +17,16 @@ export class TasksService {
    getAccount(){
     return this.http.get<any>(this.URL + '/account');   
   }
+  //Obtención del saldo de la cuenta del usuario logueado
   showbalance() {
     return this.http.get<any>(this.URL + '/showbalance');
+  }
+  //Obtención de la id de la cuenta del usuario logueado
+  showid() {
+    return this.http.get<any>(this.URL + '/showid');
+  }
+  //Eliminación de la cuenta
+  delete() {
+    return this.http.delete<any>(this.URL + '/deleteaccount');
   }
 }
