@@ -1,0 +1,11 @@
+user:
+  email: 'adrian@adrian.com'
+  name: 'ahaba'
+  password: '12345'
+  account: 
+  - 0: '60c483dc2988d304a819e467'
+
+account:
+  name_account: 'CUENTA ADRIAN'
+  balance: 0
+  user: '60c483ca2988d304a819e466'
