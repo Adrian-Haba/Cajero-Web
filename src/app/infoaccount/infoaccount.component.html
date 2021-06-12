@@ -1,0 +1,25 @@
+<p class="font fixed-top text-left">Bienvenido, <b>{{ username }}</b></p>
+<p class="font fixed-top text-right">BANCO HISPALIS</p>
+<div class="btn card-mgl card bg-light">
+    <div class="card-body text-center">
+        <p class="card-text cardsize" [routerLink]="['/addbalance']">Ingresar</p>
+    </div>
+</div>
+<div class="btn card-mgc card bg-light">
+    <div class="card-body text-center">
+        <p class=" card-text cardsize">{{ account }} ------ {{ balance }}€</p>
+    </div>
+</div>
+<div class="btn card-mgl card bg-light">
+    <div class="card-body text-center">
+        <p class="card-text cardsize" [routerLink]="['/removebalance']">Retirar</p>
+    </div>
+</div>
+<div class="btn card-mgr card bg-light">
+    <div class="card-body text-center">
+        <p class="card-text cardsize" [routerLink]="['/accounts']">Salir</p>
+    </div>
+</div>
+
+
+

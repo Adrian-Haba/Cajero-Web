@@ -7,20 +7,22 @@
     background-color: #fff;
     border: 1px solid #fff;
     border-radius: 5px;
-    padding: 2px;
+    padding: 10px;
     margin: 10px;
-  
-  }
+    text-align: center;
+}
 
-  button{
+button{
     border: none;
     background-color: transparent;
     }
-    
+  
+  
   .card-mgl{
-    margin-right: 200px;
-    margin-left: 200px;
+    margin-right: 300px;
+    margin-left: 100px;
     margin-top: 50px;
+    padding-top: 0px;
 }
 .card-mgr{
     margin-left: 300px;

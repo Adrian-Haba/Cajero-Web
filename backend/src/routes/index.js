@@ -1,10 +1,10 @@
-const { Router } = require('express');
+const { Router} = require('express');
 const router = Router();
 
 const User = require('../models/User');
 const Account = require('../models/Account');
 
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken'); 
 
 router.get('/', (req, res) => res.send("Hello World"));
 
@@ -31,82 +31,183 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/createaccount',verifyToken, async (req, res) => {
-  //Guardamos la cuenta del usuario en la base de datos
-  //const query = {email: 'adrian@adaits.com'};
-  //const update = { $set: { name_account: "Deli Llama", balance: 0 }};
-  //const options = { upsert: true };
-  //await User.updateOne(query, update, options);
+  //Guardamos la cuenta en la base de datos
+  const { name_account, balance, userId = req.userId } = req.body;
+  const user = await User.findById(userId); 
+  const newAccount = new Account({
+    name_account, 
+    balance,
+    user: user._id
+  })
 
-    //let body = req.body;
-    //User.updateOne({_id:body._id },{
-    //  $set: {
-    //    account: name_account,
-    //    account: balance 
-    //  }
-    //})
+  try {
+    const savedAccount = await newAccount.save()
+    user.account = user.account.concat(savedAccount._id)
+    await user.save()
 
-    const { name_account, balance } = req.body; 
-    const newAccount = new Account({name_account, balance});
-    await newAccount.save();
+    res.json(savedAccount)
+  }catch (error) {
+    next(error)
+  }
 });
 
-//EJEMPLO Ruta pública para poder devolver datos
-router.get('/tasks', (req, res) =>{
-  res.json([
-    {
-      _id: '1',
-      name: "lorem ipsum",
-      description: 'lorem ipsum',
-      date: "2021-03-04T11:02:43.765Z"
-    },
-    {
-      _id: '2',
-      name: "lorem ipsum",
-      description: 'lorem ipsum',
-      date: "2024-03-04T11:02:43.765Z"
-    },
-    {
-      _id: '3',
-      name: "lorem ipsum",
-      description: 'lorem ipsum',
-      date: "2021-03-04T17:02:43.765Z"
-    }
-  ])
+//Recuperar todos los usuarios
+router.get('/users', async (req, res) => {
+  const users = await User.find({})
+  res.json(users)
 });
 
-//EJEMPLO Ruta privada para devolver datos privados
-router.get('/private-tasks', verifyToken, (req, res) =>{
-  res.json([
-    {
-      _id: '1',
-      name: "lorem ipsum",
-      description: 'lorem ipsum',
-      date: "2021-03-04T11:02:43.765Z"
-    },
-    {
-      _id: '2',
-      name: "lorem ipsum",
-      description: 'lorem ipsum',
-      date: "2024-03-04T11:02:43.765Z"
-    },
-    {
-      _id: '3',
-      name: "lorem ipsum",
-      description: 'lorem ipsum',
-      date: "2021-03-04T17:02:43.765Z"
-    }
-  ])
+//Recuperar todas las cuentas bancarias
+router.get('/accounts', async (req, res) => {
+  const accounts = await Account.find({})
+  res.json(accounts)
 });
 
-//Ruta privada para pedir el nombre del usuario logueado
+//Ruta para pedir el nombre del usuario logueado
 router.get('/username', verifyToken, (req, res) => {
   var usernameLC = req.userName.toLowerCase()
   res.json(usernameLC);
 });
-//Ruta privada para pedir la cuenta del usuario logueado
-//router.get('/account', verifyToken, (req, res) => {
-//  res.json(req.AccountName);
-//}); 
+
+//Ruta para pedir la cuenta de banco del usuario
+router.get('/account', async (req, res) => {
+  const infouser = await User.findOne({}).populate('account', {
+    _id: 0,
+    name_account: 1
+  })
+  name_account = infouser.account[0]
+  account = name_account.name_account
+
+  res.json(account)
+})
+
+//Ruta para pedir el saldo de la cuenta para confirmar si se puede eliminar o no
+router.get('/showbalance', async (req, res) => {
+  const infouser = await User.findOne({}).populate('account', {
+    _id: 0,
+    balance: 1
+  })
+  balance = infouser.account[0]
+  accountBalance = balance.balance
+  res.json(accountBalance)
+})
+
+//Ruta para pedir la id de la cuenta para proceder a eliminarla
+router.get('/showid', async (req, res) => {
+  const infouser = await User.findOne({}).populate('account', {
+    _id: 1
+  })
+  id_account = infouser.account[0]
+  idAccount = id_account.id_account
+  res.json(idAccount)
+})
+
+//Ruta para eliminar la cuenta del usuario logueado
+router.delete('/deleteaccount', async (req, res) => {
+  
+  //PEDIR ID CUENTA
+  const infouser2 = await User.findOne({}).populate('account', {
+    _id: 1
+  })
+  id = infouser2.account
+
+  Account.findByIdAndRemove(id, (err) => {
+    if (err) res.status(500).send({ message: `Error al eliminar cuenta bancaria: ${err}`})
+    res.status(200).send({ message: `Cuenta eliminada correctamente`})
+  })
+});
+
+//Ruta para incrementar el saldo de la cuenta
+router.put('/sumbalance', async function(req, res) {
+
+    //PEDIR SALDO TOTAL
+    const infouser = await User.findOne({}).populate('account', {
+      _id: 0,
+      balance: 1
+    })
+    all_balance = infouser.account[0]
+    accountBalance = all_balance.balance 
+    
+    //PEDIR ID CUENTA
+    const infouser2 = await User.findOne({}).populate('account', {
+      _id: 1
+    })
+    id = infouser2.account
+    
+    //Recoger datos 
+    let { balance } = req.body;
+
+    //Incrementar saldo
+    balance = accountBalance + balance
+    
+    //Actualizar
+    Account.updateOne({ _id: id }, {
+      $set: {
+        balance: balance
+      }
+    },
+    function(error) {
+      if (error) {
+          res.json({
+            resultado: false,
+            msg: 'Error al actualiar saldo',
+            err
+          });
+      } else {
+        res.json({
+          resultado: true,
+          msg: 'Saldo actualizado correctamente'
+        })
+      }
+    }
+  )
+});
+
+//Ruta para retirar el saldo de la cuenta
+router.put('/resbalance', async function(req, res) {
+
+  //PEDIR SALDO TOTAL
+  const infouser = await User.findOne({}).populate('account', {
+    _id: 0,
+    balance: 1
+  })
+  all_balance = infouser.account[0]
+  accountBalance = all_balance.balance 
+  
+  //PEDIR ID CUENTA
+  const infouser2 = await User.findOne({}).populate('account', {
+    _id: 1
+  })
+  id = infouser2.account
+  
+  //Recoger datos 
+  let { balance } = req.body;
+
+  //Retirar saldo
+  balance = accountBalance - balance
+  
+  //Actualizar
+  Account.updateOne({ _id: id }, {
+    $set: {
+      balance: balance
+    }
+  },
+  function(error) {
+    if (error) {
+        res.json({
+          resultado: false,
+          msg: 'Error al actualiar saldo',
+          err
+        });
+    } else {
+      res.json({
+        resultado: true,
+        msg: 'Saldo actualizado correctamente'
+      })
+    }
+  }
+)
+});
 
 //Validación
  function verifyToken(req, res, next) {
@@ -126,8 +227,9 @@ router.get('/username', verifyToken, (req, res) => {
     if (!payload) {
       return res.status(401).send('Acceso denegado');
     } 
+    req.userId = payload._id;
     req.userName = payload.name;
-    //req.AccountName = payload.name_account;
+    req.accountId = payload.account;
     next();
     
   } catch(e) {

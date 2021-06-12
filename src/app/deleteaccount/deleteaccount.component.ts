@@ -12,11 +12,6 @@ export class DeleteaccountComponent implements OnInit {
 
   username: any = '';
 
-  account = {
-    name_account: '',
-    balance: 100
-  }
-
   constructor (
     private authService: AuthService, 
     private tasksService: TasksService,
@@ -32,18 +27,4 @@ export class DeleteaccountComponent implements OnInit {
         err => console.log(err)
       )
   }
-
-  //delete() {
-  //  this.authService.delete(this.account)
-  //    .subscribe(
-  //      res => {
-  //        console.log(res)
-  //      },
-  //      err => {
-  //        return console.log(err)
-  //      }
-  //    )
-  //    this.router.navigate(['/accounts']);
- // }
-
 }

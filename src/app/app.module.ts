@@ -15,6 +15,9 @@ import { CreateaccountComponent } from './createaccount/createaccount.component'
 import { DeleteaccountComponent } from './deleteaccount/deleteaccount.component';
 import { ConfirmDeleteaccountComponent } from './confirm-deleteaccount/confirm-deleteaccount.component';
 import { DefinitiveDeleteaccountComponent } from './definitive-deleteaccount/definitive-deleteaccount.component';
+import { InfoaccountComponent } from './infoaccount/infoaccount.component';
+import { AddbalanceComponent } from './addbalance/addbalance.component';
+import { RemovebalanceComponent } from './removebalance/removebalance.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { DefinitiveDeleteaccountComponent } from './definitive-deleteaccount/def
     CreateaccountComponent,
     DeleteaccountComponent,
     ConfirmDeleteaccountComponent,
-    DefinitiveDeleteaccountComponent
+    DefinitiveDeleteaccountComponent,
+    InfoaccountComponent,
+    AddbalanceComponent,
+    RemovebalanceComponent
   ],
   imports: [
     BrowserModule,
